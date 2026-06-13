@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import { correlationIdMiddleware } from "./middlewares/correlationId";
 import { requestLogger } from "./middlewares/requestLogger";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const createApp = (): Express => {
   const app = express();
@@ -12,6 +13,10 @@ const createApp = (): Express => {
   app.use(helmet());
   app.use(cors());
   app.use(express.json());
+
+  // Routes go here (before the error handler)
+
+  app.use(errorHandler);
 
   return app;
 };
